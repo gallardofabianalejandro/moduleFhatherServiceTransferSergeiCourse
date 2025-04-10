@@ -1,0 +1,68 @@
+services:
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:7.7.0'
+    container_name: zookeeper_sergei_transfer
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '2181:2181'
+
+  kafka:
+    image: 'confluentinc/cp-kafka:7.7.0'
+    container_name: kafka_sergei_transfer
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1  # Añade esta línea
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1           # Añade esta línea
+    ports:
+      - '9092:9092'
+
+  consumer-withdrawal-service:
+    build:
+      context: ./WithdrawalService
+    container_name: consumer_withdrawal_service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+  producer-transaction-service:
+    command: ["sh", "-c", "sleep 60 && java -jar /app/your-app.jar"]
+    build:
+      context: ./TransferService
+    container_name: producer_transfer_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+  consumer-deposit-service:
+    build:
+      context: ./DepositService
+    container_name: consumer_deposit_service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+  mock-service:
+    build:
+      context: ./mockservice
+    container_name: mock_service
+    ports:
+      - "8083:8083"

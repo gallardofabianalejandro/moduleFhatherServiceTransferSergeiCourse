@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$USER_HOME$/Downloads/TransferService-final/TransferService/pom.xml" />
+        <option value="$USER_HOME$/Downloads/core (1)/core/pom.xml" />
+        <option value="$USER_HOME$/Downloads/WithdrawalService-final/WithdrawalService/pom.xml" />
+        <option value="$USER_HOME$/Downloads/DepositService-final/DepositService/pom.xml" />
+        <option value="$USER_HOME$/Downloads/mockservice (1)/mockservice/pom.xml" />
+        <option value="$PROJECT_DIR$/../core/pom.xml" />
+        <option value="$PROJECT_DIR$/DepositService/pom.xml" />
+        <option value="$PROJECT_DIR$/mockservice/mockservice/pom.xml" />
+        <option value="$PROJECT_DIR$/WithdrawalService/pom.xml" />
+        <option value="$PROJECT_DIR$/TransferService/pom.xml" />
+        <option value="$PROJECT_DIR$/mockservice/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="zulu-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
