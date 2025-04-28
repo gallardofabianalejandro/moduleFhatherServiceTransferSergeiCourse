@@ -44,10 +44,12 @@ services:
     container_name: producer_transfer_service
     ports:
       - "8080:8080"
+      - "5005:5005"  # Puerto de debug
     depends_on:
       - kafka
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
 
   consumer-deposit-service:
     build:
